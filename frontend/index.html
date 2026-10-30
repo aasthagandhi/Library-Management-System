@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management | Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <div><strong>Library</strong><span>MANAGEMENT</span></div>
+      </div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav-menu">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+        <button class="nav-link" data-page="books"><span class="nav-icon">▤</span>Books</button>
+        <button class="nav-link" data-page="students"><span class="nav-icon">♙</span>Students</button>
+        <button class="nav-link" data-page="issue"><span class="nav-icon">⇄</span>Issue / Return</button>
+        <button class="nav-link" data-page="history"><span class="nav-icon">◷</span>Issue History</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">?</div><strong>Need help?</strong><p>Manage your library with ease.</p></div>
+        <div class="admin-profile"><div class="avatar">A</div><div><strong>Administrator</strong><span>Library Admin</span></div><span class="profile-dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong id="pageCrumb">Dashboard</strong></div>
+        <div class="top-actions">
+          <span class="api-indicator"><i></i><span id="apiStatus">Checking API</span></span>
+          <div class="top-avatar">A</div>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="page-section active" id="page-dashboard">
+          <div class="page-heading">
+            <div><p class="eyebrow">OVERVIEW</p><h1>Good day, Admin <span>✦</span></h1><p class="subheading">Here’s what’s happening in your library today.</p></div>
+            <button class="btn btn-primary" data-goto="issue">＋ Issue a book</button>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total books</span><span class="stat-icon purple">▤</span></div><strong id="statBooks">—</strong><small>Books in your collection</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Total students</span><span class="stat-icon blue">♙</span></div><strong id="statStudents">—</strong><small>Registered students</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Currently issued</span><span class="stat-icon orange">⇄</span></div><strong id="statActive">—</strong><small>Books not yet returned</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Overdue books</span><span class="stat-icon red">◷</span></div><strong id="statOverdue">—</strong><small>Past their due date</small></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel">
+              <div class="panel-heading"><div><h2>Recent issue activity</h2><p>Latest library issue records</p></div><button class="text-btn" data-goto="history">View all →</button></div>
+              <div class="table-wrap"><table><thead><tr><th>BOOK</th><th>STUDENT</th><th>ISSUE DATE</th><th>STATUS</th></tr></thead><tbody id="recentIssues"><tr><td colspan="4" class="empty-cell">Loading activity…</td></tr></tbody></table></div>
+            </article>
+            <article class="panel quick-panel">
+              <div class="panel-heading"><div><h2>Quick actions</h2><p>Common library tasks</p></div></div>
+              <button class="quick-action" data-goto="books"><span class="quick-symbol purple">＋</span><span><b>Add a new book</b><small>Add a title to your collection</small></span><span class="arrow">→</span></button>
+              <button class="quick-action" data-goto="students"><span class="quick-symbol blue">♙</span><span><b>Register student</b><small>Create a student record</small></span><span class="arrow">→</span></button>
+              <button class="quick-action" data-goto="issue"><span class="quick-symbol orange">⇄</span><span><b>Issue / return book</b><small>Manage book circulation</small></span><span class="arrow">→</span></button>
+              <button class="quick-action" data-goto="history"><span class="quick-symbol green">◷</span><span><b>View issue history</b><small>Track library activity</small></span><span class="arrow">→</span></button>
+            </article>
+          </div>
+        </section>
+
+        <section class="page-section" id="page-books">
+          <div class="page-heading"><div><p class="eyebrow">COLLECTION</p><h1>Book management</h1><p class="subheading">Manage, search and organize your library books.</p></div><button class="btn btn-primary" id="addBookBtn">＋ Add new book</button></div>
+          <div class="toolbar"><div class="search-box"><span>⌕</span><input id="bookSearch" type="search" placeholder="Search by title, author or category…"></div><select id="bookFilter"><option value="all">All books</option><option value="available">Available only</option></select><button class="btn btn-light" id="refreshBooks">↻ Refresh</button></div>
+          <div class="panel"><div class="panel-heading"><div><h2>All books</h2><p id="bookCount">Loading books…</p></div></div><div class="table-wrap"><table><thead><tr><th>BOOK DETAILS</th><th>AUTHOR</th><th>ISBN</th><th>CATEGORY</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="booksTable"></tbody></table></div></div>
+        </section>
+
+        <section class="page-section" id="page-students">
+          <div class="page-heading"><div><p class="eyebrow">PEOPLE</p><h1>Student management</h1><p class="subheading">Keep student information up to date.</p></div><button class="btn btn-primary" id="addStudentBtn">＋ Register student</button></div>
+          <div class="toolbar"><div class="search-box"><span>⌕</span><input id="studentSearch" type="search" placeholder="Search by name, email or phone…"></div><button class="btn btn-light" id="refreshStudents">↻ Refresh</button></div>
+          <div class="panel"><div class="panel-heading"><div><h2>Registered students</h2><p id="studentCount">Loading students…</p></div></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>EMAIL</th><th>PHONE</th><th>ADDRESS</th><th>ACTIONS</th></tr></thead><tbody id="studentsTable"></tbody></table></div></div>
+        </section>
+
+        <section class="page-section" id="page-issue">
+          <div class="page-heading"><div><p class="eyebrow">CIRCULATION</p><h1>Issue & return</h1><p class="subheading">Issue books to students and process returns.</p></div></div>
+          <div class="two-column">
+            <article class="panel form-panel"><div class="panel-heading"><div><h2>Issue a book</h2><p>Select a student and an available book.</p></div><span class="form-icon purple">⇄</span></div>
+              <form id="issueForm" class="stack-form">
+                <label>Student<select id="issueStudent" required><option value="">Select student</option></select></label>
+                <label>Available book<select id="issueBook" required><option value="">Select available book</option></select></label>
+                <div class="info-note">The due date is calculated automatically by the backend.</div>
+                <button class="btn btn-primary btn-full" type="submit">Issue book</button>
+              </form>
+            </article>
+            <article class="panel form-panel"><div class="panel-heading"><div><h2>Return a book</h2><p>Choose an active issue to return it.</p></div><span class="form-icon green">↩</span></div>
+              <form id="returnForm" class="stack-form">
+                <label>Active issue<select id="returnIssue" required><option value="">Select active issue</option></select></label>
+                <div class="info-note">The backend records the return date and calculates any late fine.</div>
+                <button class="btn btn-dark btn-full" type="submit">Confirm return</button>
+              </form>
+            </article>
+          </div>
+          <div class="panel section-gap"><div class="panel-heading"><div><h2>Currently issued books</h2><p>Books that have not been returned yet.</p></div><button class="text-btn" id="refreshActive">↻ Refresh</button></div><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>STUDENT</th><th>ISSUED ON</th><th>DUE DATE</th><th>STATUS</th></tr></thead><tbody id="activeTable"></tbody></table></div></div>
+        </section>
+
+        <section class="page-section" id="page-history">
+          <div class="page-heading"><div><p class="eyebrow">RECORDS</p><h1>Issue history</h1><p class="subheading">Review issue records, returns and overdue books.</p></div><button class="btn btn-light" id="refreshHistory">↻ Refresh</button></div>
+          <div class="history-tabs"><button class="tab-btn active" data-history="all">All records</button><button class="tab-btn" data-history="active">Active</button><button class="tab-btn" data-history="overdue">Overdue</button><button class="tab-btn" data-history="student">By student</button><button class="tab-btn" data-history="book">By book</button></div>
+          <div class="toolbar history-filter" id="historyLookup" hidden><div class="search-box"><span>⌕</span><input id="historyId" type="number" min="1" placeholder="Enter student ID or book ID"></div><button class="btn btn-primary" id="historySearchBtn">Search history</button></div>
+          <div class="panel"><div class="panel-heading"><div><h2 id="historyTitle">All issue records</h2><p id="historyCount">Loading records…</p></div></div><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>STUDENT</th><th>ISSUE DATE</th><th>DUE DATE</th><th>RETURN DATE</th><th>FINE</th><th>STATUS</th></tr></thead><tbody id="historyTable"></tbody></table></div></div>
+        </section>
+        <footer class="footer">© <span id="year"></span> Library Management <span>•</span> Admin workspace</footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog class="modal" id="bookModal"><form id="bookForm" method="dialog"><div class="modal-heading"><div><p class="eyebrow">COLLECTION</p><h2 id="bookModalTitle">Add new book</h2></div><button type="button" class="close-btn" data-close="bookModal">×</button></div><input type="hidden" id="bookId"><div class="form-grid"><label>Book title<input id="bookTitle" required maxlength="150" placeholder="e.g. Clean Code"></label><label>Author<input id="bookAuthor" required placeholder="Author name"></label><label>ISBN<input id="bookIsbn" required placeholder="ISBN number"></label><label>Category<input id="bookCategory" required placeholder="e.g. Programming"></label><label class="checkbox-label"><input id="bookAvailable" type="checkbox" checked> Available for issue</label></div><div class="modal-actions"><button type="button" class="btn btn-light" data-close="bookModal">Cancel</button><button class="btn btn-primary" type="submit">Save book</button></div></form></dialog>
+
+  <dialog class="modal" id="studentModal"><form id="studentForm" method="dialog"><div class="modal-heading"><div><p class="eyebrow">PEOPLE</p><h2 id="studentModalTitle">Register student</h2></div><button type="button" class="close-btn" data-close="studentModal">×</button></div><input type="hidden" id="studentId"><div class="form-grid"><label>Full name<input id="studentName" required placeholder="Student name"></label><label>Email<input id="studentEmail" type="email" required placeholder="name@example.com"></label><label>Phone<input id="studentPhone" required placeholder="Phone number"></label><label>Address<input id="studentAddress" required placeholder="City / address"></label></div><div class="modal-actions"><button type="button" class="btn btn-light" data-close="studentModal">Cancel</button><button class="btn btn-primary" type="submit">Save student</button></div></form></dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
